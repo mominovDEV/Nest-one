@@ -1,10 +1,11 @@
-import { Table, Model, Column, DataType } from 'sequelize-typescript';
+import { Table, Model, Column, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript';
+import { Company } from 'src/company/models/company.models';
 
 interface BuilderAttr {
   full_name: string;
   birth_day: Date;
   salary: string;
-  companyId:bigint;
+  companyId:number;
 }
 
 @Table({ tableName: 'builder' })
@@ -28,9 +29,19 @@ export class Builder extends Model<Builder, BuilderAttr> {
     type: DataType.STRING,
   })
   salary: string;
-  @Column({
-    type: DataType.STRING,
-  })
-  companyId:bigint;
+  // @Column({
+  //   type: DataType.STRING,
+  // })
+  // companyId:bigint;
+
+
+  @ForeignKey(()=>Company)
+  @Column({ type:DataType.INTEGER, onDelete:'CASCADE',onUpdate:'CASCADE'})
+  companyId:number;
+
+
+
+  @BelongsTo(()=>Company)
+  company: Company;
   
 }
