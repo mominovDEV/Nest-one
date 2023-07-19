@@ -36,9 +36,9 @@ export class CompanyController {
     return this.companyService.getByIdCompany(Number(name));
   }
 
-  @Delete(':name')
-  async DeleteCompanyById(@Param('name') name: string): Promise<Company> {
-    return this.companyService.getByIdCompany(Number(name));
+  @Delete(':id')
+  async DeleteCompanyById(@Param('id') id: number): Promise<Company> {
+    return this.companyService.getByIdCompany(Number(id));
   }
   @Put(':id')
   async updateCompany(

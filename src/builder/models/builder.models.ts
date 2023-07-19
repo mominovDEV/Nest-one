@@ -21,7 +21,7 @@ export class Builder extends Model<Builder, BuilderAttr> {
   })
   full_name: string;
   @Column({
-    type: DataType.STRING,
+    type: DataType.DATE,
   })
   birth_day: Date;
   @Column({

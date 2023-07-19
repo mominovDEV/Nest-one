@@ -7,40 +7,43 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
+import { BuilderService } from './builder.service';
+import { CreateBuilderDto } from './dto/create-builder.dto';
+import { UpdateBuilderDto } from './dto/update-builder.dto';
+import { Builder } from './models/builder.models';
 
-@Controller('company')
-export class CompanyController {
-  constructor(private readonly companyService: CompanyService) {}
+@Controller('builder')
+export class BuilderController {
+  constructor(private readonly builderService:BuilderService) {}
 
   @Post('create')
-  async createCompany(@Body() CreateCompanyDto: CreateCompanyDto) {
-    return this.companyService.createCompany(CreateCompanyDto);
-    // return company;
+  async CreateBuilder(@Body() CreateBuilderDto: CreateBuilderDto) {
+    return this.builderService.CreateBuilder(CreateBuilderDto);
   }
   @Get('all')
-  async getAllCompany(): Promise<Company[]> {
-    return this.companyService.getAllCompany();
+  async getAllBuilder(): Promise<Builder[]> {
+    return this.builderService.getAllBuilder();
   }
 
   @Get(':id')
-  async getByIdCompany(@Param('id') id: string): Promise<Company> {
-    return this.companyService.getByIdCompany(Number(id));
+  async getByIdBuilder(@Param('id') id: string): Promise<Builder> {
+    return this.builderService.getByIdBuilder(Number(id));
   }
 
-  @Get(':name')
-  async getCompanyByName(@Param('name') name: string): Promise<Company> {
-    return this.companyService.getByIdCompany(Number(name));
+  @Get(':full_name')
+  async getBuilderByName(@Param('full_name') full_name: string): Promise<Builder> {
+    return this.builderService.getBuilderByName(String(full_name));
   }
 
-  @Delete(':name')
-  async DeleteCompanyById(@Param('name') name: string): Promise<Company> {
-    return this.companyService.getByIdCompany(Number(name));
+  @Delete(':id')
+  async DeleteBuilderById(@Param('id') id: number): Promise<Number> {
+    return this.builderService.DeleteBuilderById(Number(id));
   }
   @Put(':id')
-  async updateCompany(
+  async updatebuilder(
     @Param('id') id: number,
-    @Body() UpdateCompanyDto: UpdateCompanyDto,
-  ): Promise<Company> {
-    return this.companyService.updateCompany(+id, UpdateCompanyDto);
+    @Body() UpdateBuilderDto: UpdateBuilderDto,
+  ): Promise<Builder> {
+    return this.builderService.updateBuilder(+id, UpdateBuilderDto);
   }
 }
