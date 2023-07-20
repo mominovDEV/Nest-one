@@ -18,6 +18,9 @@ export class Machine extends Model<Machine, MachineAttr> {
   @Column({ type: DataType.INTEGER, onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   companyId: number;
 
+  @Column({ type: DataType.STRING, onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  name: string;
+
   // @HasMany(()=>Builder)
   // builders:Builder[];
 }

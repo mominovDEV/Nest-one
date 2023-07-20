@@ -18,7 +18,7 @@ export class MachineService {
     const machines = await this.machineRepo.findAll();
     return machines;
   }
-  async getByIdMachine(id: number): Promise<Machine> {
+async getByIdMachine(id: number): Promise<Machine> {
     const machine = await this.machineRepo.findByPk(id);
     return machine;
   }

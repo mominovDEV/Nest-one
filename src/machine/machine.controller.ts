@@ -17,8 +17,8 @@ export class MachineController {
   constructor(private readonly MachineService: MachineService) {}
 
   @Post('create')
-  async createMachine(@Body() CreateMachineDto: CreateMachineDto) {
-    return this.MachineService.createMachine(CreateMachineDto);
+  async createMachine(@Body() createMachineDto: CreateMachineDto) {
+    return this.MachineService.createMachine(createMachineDto);
     // return Machine;
   }
   @Get('all')
@@ -43,8 +43,8 @@ export class MachineController {
   @Put(':id')
   async updateMachine(
     @Param('id') id: number,
-    @Body() UpdateMachineDto: UpdateMachineDto,
+    @Body() updateMachineDto: UpdateMachineDto,
   ): Promise<Machine> {
-    return this.MachineService.updateMachine(+id, UpdateMachineDto);
+    return this.MachineService.updateMachine(+id, updateMachineDto);
   }
 }

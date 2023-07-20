@@ -1,4 +1,4 @@
 export class UpdateMachineDto {
-  name?: string;
-  companyId: number;
+  machineId?: number;
+  driverId: number;
 }
