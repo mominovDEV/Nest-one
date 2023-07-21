@@ -8,14 +8,14 @@ interface MachineAttr {
 }
 
 @Table({ tableName: 'machine' })
-export class Machine extends Model<Machine, MachineAttr> {
+export class MachineDriver extends Model<MachineDriver, MachineAttr> {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   })
   id: number;
-  @ForeignKey(() => Machine)
+  @ForeignKey(() => MachineDriver)
   @Column({ type: DataType.INTEGER })
   machineId: number;
 

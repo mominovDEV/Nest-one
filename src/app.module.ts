@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Builder } from './builder/models/builder.models';
-import { CompanyModule } from './company/company.module';
-import { MachineModule } from './machine/machine.module';
 import { Machine } from './machine/models/machine.models';
 import { Role } from './roles/models/role.model';
 import { RolesModule } from './roles/roles.module';
@@ -11,6 +9,9 @@ import { UserRoles } from './users/models/user-role.model';
 import { User } from './users/models/user.model';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { Company } from './company/models/company.models';
+import { Driver } from './driver/models/driver.models';
+import { MachineDriver } from './machine_driver/models/machine.models';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.POSTGRES_USER,
       password: String(process.env.POSTGRES_PASSWORD),
       database: process.env.POSTGRES_DB,
-      models: [User, Role, UserRoles],
+      models: [Role, User, UserRoles,Company,Machine,Builder,Driver,MachineDriver],
+      // models: [User, Role, UserRoles],
       autoLoadModels: true,
       logging: false,
     }),

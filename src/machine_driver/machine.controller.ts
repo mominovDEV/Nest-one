@@ -10,7 +10,7 @@ import {
 import { CreateMachineDto } from './dto/create-machine.dto';
 import { UpdateMachineDto } from './dto/update-machine.dto';
 import { MachineService } from './machine.service';
-import { Machine } from './models/machine.models';
+import { MachineDriver } from './models/machine.models';
 
 @Controller('Machine')
 export class MachineController {
@@ -22,29 +22,29 @@ export class MachineController {
     // return Machine;
   }
   @Get('all')
-  async getAllMachine(): Promise<Machine[]> {
+  async getAllMachine(): Promise<MachineDriver[]> {
     return this.MachineService.getAllMachine();
   }
 
   @Get(':id')
-  async getByIdMachine(@Param('id') id: string): Promise<Machine> {
+  async getByIdMachine(@Param('id') id: string): Promise<MachineDriver> {
     return this.MachineService.getByIdMachine(Number(id));
   }
 
   @Get(':name')
-  async getMachineByName(@Param('name') name: string): Promise<Machine> {
+  async getMachineByName(@Param('name') name: string): Promise<MachineDriver> {
     return this.MachineService.getByIdMachine(Number(name));
   }
 
   @Delete(':id')
-  async DeleteMachineById(@Param('id') id: number): Promise<Machine> {
+  async DeleteMachineById(@Param('id') id: number): Promise<MachineDriver> {
     return this.MachineService.getByIdMachine(Number(id));
   }
   @Put(':id')
   async updateMachine(
     @Param('id') id: number,
     @Body() UpdateMachineDto: UpdateMachineDto,
-  ): Promise<Machine> {
+  ): Promise<MachineDriver> {
     return this.MachineService.updateMachine(+id, UpdateMachineDto);
   }
 }
