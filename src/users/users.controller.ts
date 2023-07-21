@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ActivateUserDto } from './dto/activate-user.dto';
+import { AddRoleDto } from './dto/add-role.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -31,5 +33,23 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
+  }
+
+  @HttpCode(200)
+  @Post('add_role')
+  addRole(@Body() addRoleDto: AddRoleDto) {
+    return this.usersService.addRole(addRoleDto);
+  }
+
+  @HttpCode(200)
+  @Post('remove_role')
+  removeRole(@Body() addRoleDto: AddRoleDto) {
+    return this.usersService.removeRole(addRoleDto);
+  }
+
+  @HttpCode(200)
+  @Post('activate')
+  activateUseer(@Body() activateUserDto: ActivateUserDto) {
+    return this.usersService.activateUser(activateUserDto);
   }
 }

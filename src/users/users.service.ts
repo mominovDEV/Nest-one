@@ -1,3 +1,4 @@
+import { ActivateUserDto } from './dto/activate-user.dto';
 import { AddRoleDto } from './dto/add-role.dto';
 import { RolesService } from './../roles/roles.service';
 import {
@@ -44,9 +45,47 @@ export class UsersService {
 
     if (role && user) {
       await user.$add('roles', role.id);
-      return user;
+      const updatedUser = await this.userRepository.findByPk(
+        addRoleDto.userId,
+        {
+          include: { all: true },
+        },
+      );
+
+      return updatedUser;
     }
     throw new HttpException('foydalanuvchi topilmadi', HttpStatus.NOT_FOUND);
+  }
+
+  async removeRole(addRoleDto: AddRoleDto) {
+    const user = await this.userRepository.findByPk(addRoleDto.userId);
+    const role = await this.RolesService.getRoleByValue(addRoleDto.value);
+
+    if (role && user) {
+      await user.$remove('roles', role.id);
+      const updatedUser = await this.userRepository.findByPk(
+        addRoleDto.userId,
+        {
+          include: { all: true },
+        },
+      );
+
+      return updatedUser;
+    }
+    throw new HttpException('foydalanuvchi topilmadi', HttpStatus.NOT_FOUND);
+  }
+
+  async activateUser(activateUserDto: ActivateUserDto) {
+    const user = await this.userRepository.findByPk(activateUserDto.userId);
+
+    if (!user) {
+     throw new HttpException('foydalanuvchi topilmadi', HttpStatus.NOT_FOUND);
+    }
+
+    user.is_active = true;
+    await user.save();
+    return user;
+   
   }
 
   findAllUsers() {
