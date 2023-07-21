@@ -52,4 +52,10 @@ export class UsersController {
   activateUseer(@Body() activateUserDto: ActivateUserDto) {
     return this.usersService.activateUser(activateUserDto);
   }
+
+  @HttpCode(200)
+  @Post('deactivate')
+  deactivateUseer(@Body() activateUserDto: ActivateUserDto) {
+    return this.usersService.deactivateUser(activateUserDto);
+  }
 }

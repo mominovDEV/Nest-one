@@ -79,15 +79,24 @@ export class UsersService {
     const user = await this.userRepository.findByPk(activateUserDto.userId);
 
     if (!user) {
-     throw new HttpException('foydalanuvchi topilmadi', HttpStatus.NOT_FOUND);
+      throw new HttpException('foydalanuvchi topilmadi', HttpStatus.NOT_FOUND);
     }
 
     user.is_active = true;
     await user.save();
     return user;
-   
   }
+  async deactivateUser(activateUserDto: ActivateUserDto) {
+    const user = await this.userRepository.findByPk(activateUserDto.userId);
 
+    if (!user) {
+      throw new HttpException('foydalanuvchi topilmadi', HttpStatus.NOT_FOUND);
+    }
+
+    user.is_active = false;
+    await user.save();
+    return user;
+  }
   findAllUsers() {
     return this.userRepository.findAll({ include: { all: true } });
   }
