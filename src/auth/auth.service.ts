@@ -1,5 +1,11 @@
+import { LoginDto } from './dto/login-auth.dto';
 import { UsersService } from './../users/users.service';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/users/models/user.model';
@@ -27,8 +33,31 @@ export class AuthService {
     return this.generateToken(user);
   }
 
+  async login(LoginDto:LoginDto){
+    const user = await this.validateUser(LoginDto);
+    if(!user){
+      throw new HttpException('foydalanuvchi topilmadi', HttpStatus.NOT_FOUND);
+    }
+    return this.generateToken(user);
+  }
+
+  private async validateUser(LoginDto: LoginDto) {
+    const user = await this.UsersService.getUserByEmail(LoginDto.email);
+    if(!user){
+      throw new HttpException("email yoki parol notug'ri", HttpStatus.NOT_FOUND)
+    }
+    const validPassword = await bcrypt.compare(
+      LoginDto.password,
+      user.password,
+    );
+    if (validPassword) {
+      return user;
+    }
+    throw new UnauthorizedException('email yoki parol noturi');
+  }
+
   private async generateToken(user: User) {
     const payload = { email: user.email, id: user.id, roles: user.roles };
-    return {token:this.jwtService.sign(payload)}
+    return { token: this.jwtService.sign(payload) };
   }
 }
