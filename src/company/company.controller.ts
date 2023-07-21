@@ -1,3 +1,4 @@
+import { ApiOperation, ApiTags } from '@nestjs/swagger/dist/decorators';
 import {
   Body,
   Controller,
@@ -11,11 +12,11 @@ import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { Company } from './models/company.models';
-
+@ApiTags('Company')
 @Controller('company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
-
+  @ApiOperation({ summary: 'Company yaratish' })
   @Post('create')
   async createCompany(@Body() CreateCompanyDto: CreateCompanyDto) {
     return this.companyService.createCompany(CreateCompanyDto);

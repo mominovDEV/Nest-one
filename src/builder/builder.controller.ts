@@ -1,3 +1,4 @@
+import { ApiTags, ApiOperation } from '@nestjs/swagger/dist/decorators';
 import {
   Body,
   Controller,
@@ -12,10 +13,11 @@ import { CreateBuilderDto } from './dto/create-builder.dto';
 import { UpdateBuilderDto } from './dto/update-builder.dto';
 import { Builder } from './models/builder.models';
 
+@ApiTags('Bulder')
 @Controller('builder')
 export class BuilderController {
-  constructor(private readonly builderService:BuilderService) {}
-
+  constructor(private readonly builderService: BuilderService) {}
+  @ApiOperation({ summary: 'Builder yaratish' })
   @Post('create')
   async CreateBuilder(@Body() CreateBuilderDto: CreateBuilderDto) {
     return this.builderService.CreateBuilder(CreateBuilderDto);
@@ -31,7 +33,9 @@ export class BuilderController {
   }
 
   @Get(':full_name')
-  async getBuilderByName(@Param('full_name') full_name: string): Promise<Builder> {
+  async getBuilderByName(
+    @Param('full_name') full_name: string,
+  ): Promise<Builder> {
     return this.builderService.getBuilderByName(String(full_name));
   }
 

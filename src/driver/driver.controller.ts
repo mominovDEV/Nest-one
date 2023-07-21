@@ -1,3 +1,4 @@
+import { ApiTags, ApiOperation } from '@nestjs/swagger/dist/decorators';
 import {
   Body,
   Controller,
@@ -11,11 +12,11 @@ import { CreateDriverDto } from './dto/create-driver.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
 import { DriverService } from './driver.service';
 import { Driver } from './models/driver.models';
-
+@ApiTags('Driver')
 @Controller('Driver')
 export class DriverController {
   constructor(private readonly DriverService: DriverService) {}
-
+  @ApiOperation({ summary: 'Driver yaratish' })
   @Post('create')
   async createDriver(@Body() CreateDriverDto: CreateDriverDto) {
     return this.DriverService.createDriver(CreateDriverDto);
