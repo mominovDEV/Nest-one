@@ -1,13 +1,26 @@
+import { RolesGuard } from './../guards/roles.guard';
+import { Roles } from './../decorators/roles-auth.decorators';
+import { UserSelfGuard } from './../guards/user-self.guard';
+import { JwtAuthGuard } from './../guards/jwt-auth.guard';
 import { ActivateUserDto } from './dto/activate-user.dto';
 import { AddRoleDto } from './dto/add-role.dto';
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpCode,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './models/user.model';
 import { ApiOperation, ApiTags } from '@nestjs/swagger/dist/decorators';
 import { ApiResponse } from '@nestjs/swagger/dist/decorators/api-response.decorator';
-
 
 @ApiTags('Foydalanuvchilar')
 @Controller('users')
@@ -20,12 +33,16 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
   @ApiOperation({ summary: 'Foydalanuvchilarni kurish' })
-  @ApiResponse({status:200,description:"List of users",type:[User]})
+  @ApiResponse({ status: 200, description: 'List of users', type: [User] })
+  // @UseGuards(UserSelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAllUsers(): Promise<User[]> {
     return this.usersService.findAllUsers();
   }
   @ApiOperation({ summary: 'Foydalanuvchini idsi bilan kurish' })
+  @UseGuards(UserSelfGuard)
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
@@ -43,6 +60,8 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Role qushish' })
   @HttpCode(200)
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @Post('add_role')
   addRole(@Body() addRoleDto: AddRoleDto) {
     return this.usersService.addRole(addRoleDto);
