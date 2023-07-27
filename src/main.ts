@@ -10,7 +10,7 @@ const start = async () => {
   try {
     const app = await NestFactory.create(AppModule);
     const PORT = process.env.PORT || 3030;
-    app.useGlobalPipes(new ValidationPipe());  
+    app.useGlobalPipes(new ValidationPipe());
     const config = new DocumentBuilder()
       .setTitle('Nest-One Project')
       .setDescription('REST API')

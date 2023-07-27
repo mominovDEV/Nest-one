@@ -1,5 +1,5 @@
 import { Table, Model, Column, DataType,HasMany, ForeignKey } from 'sequelize-typescript';
-import { Driver } from 'src/driver/models/driver.models';
+import { Driver } from '../../driver/models/driver.models';
 // import { Machine } from 'src/builder/models/builder.models';
 
 interface MachineAttr {

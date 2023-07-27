@@ -1,5 +1,5 @@
 import { Table, Model, Column, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript';
-import { Company } from 'src/company/models/company.models';
+import { Company } from '../../company/models/company.models';
 
 interface BuilderAttr {
   full_name: string;

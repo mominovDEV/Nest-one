@@ -1,5 +1,5 @@
 import { Table, Model, Column, DataType,HasMany } from 'sequelize-typescript';
-import { Builder } from 'src/builder/models/builder.models';
+import { Builder } from '../../builder/models/builder.models';
 
 interface CompanyAttr {
   name: string;

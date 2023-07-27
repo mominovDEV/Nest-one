@@ -1,6 +1,6 @@
+import { CreateUserDto } from './../users/dto/create-user.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger/dist/decorators';
 import { Controller, Post, Body, HttpCode} from '@nestjs/common';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login-auth.dto';
 
