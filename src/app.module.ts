@@ -23,7 +23,7 @@ import { resolve } from 'path';
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     ServeStaticModule.forRoot({
-      rootPath:resolve(__dirname,'static'),
+      rootPath: resolve(__dirname, 'static'),
     }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
@@ -32,7 +32,17 @@ import { resolve } from 'path';
       username: process.env.POSTGRES_USER,
       password: String(process.env.POSTGRES_PASSWORD),
       database: process.env.POSTGRES_DB,
-      models: [Role, User, UserRoles,Company,Machine,Builder,Driver,MachineDriver,Post],
+      models: [
+        Role,
+        User,
+        UserRoles,
+        Company,
+        Machine,
+        Builder,
+        Driver,
+        MachineDriver,
+        Post,
+      ],
       // models: [User, Role, UserRoles],
       autoLoadModels: true,
       logging: false,
