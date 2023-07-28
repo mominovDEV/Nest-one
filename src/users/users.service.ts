@@ -25,8 +25,9 @@ export class UsersService {
     if (!role) {
       throw new BadRequestException('role not found');
     }
-    await newUser.$set('roles', [role.id]);
-    await newUser.save();
+    // await newUser.$set('roles', [role.id]);
+    // await newUser.save();
+    newUser.roles = [role];
 
     return newUser;
   }
@@ -102,14 +103,15 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.userRepository.findOne({ include: { all: true } });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    await this.userRepository.destroy({ where: { id } });
+    return { message: 'foydalanuvchi uchirildi' };
   }
 }

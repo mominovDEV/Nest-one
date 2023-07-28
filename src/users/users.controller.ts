@@ -14,6 +14,7 @@ import {
   Delete,
   HttpCode,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -44,8 +45,8 @@ export class UsersController {
   @UseGuards(UserSelfGuard)
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findOne(id);
   }
   @ApiOperation({ summary: 'Foydalanuvchini idsi bilan uzgartirish' })
   @Patch(':id')
@@ -54,7 +55,7 @@ export class UsersController {
   }
   @ApiOperation({ summary: 'Foydalanuvchini idsi bilan  uchirish' })
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.usersService.remove(+id);
   }
 

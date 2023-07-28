@@ -1,7 +1,13 @@
+import { RolesService } from './../../roles/roles.service';
 import { JwtService } from '@nestjs/jwt/dist';
-import { Test } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './../users.service';
 import { UsersController } from './../users.controller';
+import { User } from '../models/user.model';
+import { userStub } from './stubs/user.stub';
+
+
+
 
 jest.mock('../users.service');
 describe('Users controller', () => {
@@ -23,4 +29,55 @@ describe('Users controller', () => {
   it('should be defind user service', () => {
     expect(usersService).toBeDefined();
   });
+
+  describe('getOneUser', () => {
+    describe('when getOneUser is called', () => {
+      let user: User;
+      beforeEach(async () => {
+        user = await usersController.findOne(userStub().id);
+      });
+
+      it('then it should call userSevice', () => {
+        expect(usersService.findOne).toBeCalledWith(userStub().id);
+      });
+      it('then it should return User', () => {
+        expect(user).toEqual(userStub());
+      });
+    });
+  });
+
+  describe('findAllUsers', () => {
+    describe('when findAllUsers is called', () => {
+      let users: User[];
+      beforeEach(async () => {
+        users = await usersController.findAllUsers();
+      });
+
+      it('then it should call userSevice', () => {
+        expect(usersService.findAllUsers).toBeCalled();
+      });
+      it('then it should return User', () => {
+        expect(users).toEqual([userStub()]);
+      });
+    });
+  });
+
+  // describe('remove', () => {
+  //   describe('when remove is called', () => {
+  //     let user: Object;
+  //     beforeAll(async () => {
+  //       console.log(1);
+
+  //       user = await usersController.remove(userStub().id);
+  //       console.log(user);
+  //     });
+
+  //     it('then it should call userSevice', () => {
+  //       expect(usersService.remove).toBeCalledWith(userStub().id);
+  //     });
+  //     it('then it should return User', () => {
+  //       expect(user).toEqual({ message: 'foydalanuvchi uchirildi' });
+  //     });
+  //   });
+  // });
 });
